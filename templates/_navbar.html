@@ -18,9 +18,9 @@
       <ul class="navbar-nav ms-auto">
         <li class="nav-item">
           {% if user.is_authenticated %}
-          <a href="/usuarios" class="nav-link">Home</a>
+          <a href="/usuarios" class="nav-link">home</a>
           {% else %}
-          <a href="/" class="nav-link">Home</a>
+          <a href="/home" class="nav-link">Home</a>
           {% endif %}
         </li>
         {% if user.is_authenticated %}
@@ -51,9 +51,10 @@
           <a href="/signin" class="nav-link">Ingresar</a>
         </li>
         {% endif %}
+      
         <li class="nav-item">
           <a href="/nosotros" class="nav-link">Nosotros</a>
-        </li>
+          </li>
       </ul>
     </div>
   </div>

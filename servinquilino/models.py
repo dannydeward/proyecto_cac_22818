@@ -6,6 +6,12 @@ from django.forms import ValidationError
 
 # Create your models here.
 # Modelo Datos
+
+class Login(models.Model):
+    dni=models.IntegerField(primary_key=True, verbose_name="DNI", null=False, unique=True)
+    pasword=models.CharField(max_length=10, verbose_name="Pasword")
+
+
 class Dato(models.Model):
     IdUsuario = models.AutoField(primary_key=True)
     dni = models.PositiveSmallIntegerField(null=False, unique=True, verbose_name="DNI")
