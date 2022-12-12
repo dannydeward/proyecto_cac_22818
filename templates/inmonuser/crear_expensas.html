@@ -7,7 +7,15 @@
 <h1>Crear Cuota de Expensas</h1>
 
 {{error}}
+
+<div class=""row">
+  <div = class="col-18 col-md-2 offset-md-5">
+<div  class="card">
+  <div class=""card-body">
+<form action="" method="POST">
+  
 <form action="/crear_expensas/" method="POST">
+
   {% csrf_token %}
   {{form}}
 

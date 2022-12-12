@@ -5,25 +5,26 @@ from django.contrib.auth.models import User
 from django.db import IntegrityError
 from django.utils import timezone
 from django.contrib.auth.decorators import login_required
-
 from servinquilino.models import Expensa, Dato
-
 from servinquilino.forms import DatosForm, ExpensasForm
 
 # Create your views here.
 def usuarios(request):
     return  render(request, 'usuarios/usuarios.html')
+
+
+
 @login_required
 def cuotas(request):
     cuotas = Expensa.objects.filter(user=request.user)
-    return render(request, 'servinquilino/cuotas.html', {"cuotas": cuotas})
+    return render(request, 'usuarios/cuotas.html', {"cuotas": cuotas})
 
 
 @login_required
 def cuotas_pagas(request):
     cuotas = Expensa.objects.filter(user=request.user,
                                     fechapago__isnull=False).order_by('-fechapago')
-    return render(request, 'servinquilino/cuotas.html', {"cuotas": cuotas})
+    return render(request, 'usuarios/cuotas.html', {"cuotas": cuotas})
 
 @login_required
 def pagar_cuota(request, IdExpensa):
@@ -35,13 +36,12 @@ def pagar_cuota(request, IdExpensa):
         return redirect('cuotas')
 
 
-
 @login_required
-def detalle_cuotas(request, IdExpensa):
+def detalle_cuotas(request,IdExpensa ):
     if request.method == 'GET':
         cuota = get_object_or_404(Expensa, pk=IdExpensa, user=request.user)
         form = ExpensasForm(instance=cuota)
-        return render(request, 'servinquilino/detalle_cuotas.html', {'cuota': cuota, 'form': form})
+        return render(request, 'usuarios/detalle_cuotas.html', {'cuota': cuota, 'form': form})
     else:
         try:
             cuota = get_object_or_404(Expensa, pk=IdExpensa, user=request.user)
@@ -49,19 +49,19 @@ def detalle_cuotas(request, IdExpensa):
             form.save()
             return redirect('cuotas')
         except ValueError:
-            return render(request, 'servinquilino/detalle_cuotas.html', {'cuota': cuota, 'form': form, 'error': 'Error actualizando cuota.'})
+            return render(request, 'usuarios/detalle_cuotas.html', {'cuota': cuota, 'form': form, 'error': 'Error actualizando cuota.'})
 
 @login_required
 def datos(request):
     datos = Dato.objects.filter(user=request.user)
-    return render(request, 'servinquilino/datos.html', {"datos": datos})
+    return render(request, 'usuarios/datos.html', {"datos": datos})
 
 @login_required
 def detalle_datos(request, IdUsuario):
     if request.method == 'GET':
         dato = get_object_or_404(Dato, pk=IdUsuario, user=request.user)
         form = DatosForm(instance=dato)
-        return render(request, 'servinquilino/detalle_datos.html', {'dato': dato, 'form': form})
+        return render(request, 'usuarios/detalle_datos.html', {'dato': dato, 'form': form})
     else:
         try:
             dato = get_object_or_404(Dato, pk=IdUsuario, user=request.user)
@@ -69,4 +69,4 @@ def detalle_datos(request, IdUsuario):
             form.save()
             return redirect('datos')
         except ValueError:
-            return render(request, 'servinquilino/detalle_datos.html', {'dato': dato, 'form': form, 'error': 'Error actualizando Datos.'})
+            return render(request, 'usuarios/detalle_datos.html', {'dato': dato, 'form': form, 'error': 'Error actualizando Datos.'})

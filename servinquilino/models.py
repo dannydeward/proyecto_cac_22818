@@ -32,6 +32,7 @@ class Dato(models.Model):
 # Modelo Expensas
 class Expensa(models.Model):
     IdExpensa = models.AutoField(primary_key=True)
+    dni = models.CharField(null=True, max_length=10, unique=True, verbose_name="DNI")
     anio = models.CharField(max_length=4, null=False, unique=False, verbose_name="Año")
     mes = models.CharField(max_length=2, null=False, unique=False, verbose_name="Mes")
     importe = models.DecimalField(max_digits=10, decimal_places=2,

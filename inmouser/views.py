@@ -4,16 +4,23 @@ from django.contrib.auth import login, logout, authenticate
 from django.contrib.auth.models import User
 from django.db import IntegrityError
 from django.utils import timezone
-from django.contrib.auth.decorators import login_required
+from django.contrib.auth.decorators import login_required, permission_required
 
 from servinquilino.models import Expensa, Dato
 
 from servinquilino.forms import DatosForm, ExpensasForm
 
+
+
 # Create your views here.
+def administradores(request):
+    return render(request, 'inmonuser/administradores.html')
+
+    
+
 def signup(request):
     if request.method == 'GET':
-        return render(request, 'servinquilino/signup.html', {"form": UserCreationForm})
+        return render(request, 'inmonuser/signup.html', {"form": UserCreationForm})
     else:
 
         if request.POST["password1"] == request.POST["password2"]:
@@ -22,22 +29,26 @@ def signup(request):
                     request.POST["username"], password=request.POST["password1"])
                 user.save()
                 login(request, user)
-                return redirect('cuotas')
+                return redirect('Home')
+            
+                
             except IntegrityError:
-                return render(request, 'servinquilino/signup.html', {"form": UserCreationForm, "error": "Usuario ya existe."})
-
-        return render(request, 'servinquilino/signup.html', {"form": UserCreationForm, "error": "Contraseñas no coinciden."})
+                return render(request, 'servinquilino/home.html', {"form": UserCreationForm, "error": "Usuario ya existe."})
+                         
+        return render(request, 'inmonuser/signup.html', {"form": UserCreationForm, "error": "Contraseñas no coinciden."})
     
+          
     
 @login_required
 def signout(request):
     logout(request)
-    return redirect('home')
+    return redirect('logout')
 
 @login_required
+@permission_required('servinquilino.add_dato')
 def crear_datos(request):
     if request.method == "GET":
-        return render(request, 'servinquilino/crear_datos.html', {"form": DatosForm})
+        return render(request, 'inmonuser/crear_datos.html', {"form": DatosForm})
     else:
         try:
             form = DatosForm(request.POST)
@@ -46,13 +57,14 @@ def crear_datos(request):
             new_dato.save()
             return redirect('datos')
         except ValueError:
-            return render(request, 'servinquilino/crear_datos.html',
+            return render(request, 'inmonuser/crear_datos.html',
                           {"form": DatosForm, "error": "Error creando Datos Inquilino."})
 
 @login_required
+@permission_required('servinquilino.add_expensa')
 def crear_expensas(request):
     if request.method == "GET":
-        return render(request, 'servinquilino/crear_expensas.html', {"form": ExpensasForm})
+        return render(request, 'inmonuser/crear_expensas.html', {"form": ExpensasForm})
     else:
         try:
             form = ExpensasForm(request.POST)
@@ -61,7 +73,7 @@ def crear_expensas(request):
             new_expensa.save()
             return redirect('cuotas')
         except ValueError:
-            return render(request, 'servinquilino/crear_expensas.html', {"form": ExpensasForm, "error": "Error creando Cuota."})
+            return render(request, 'inmonuser/crear_expensas.html', {"form": ExpensasForm, "error": "Error creando Cuota."})
 @login_required
 def borrar_dato(request, IdUsuario):
     dato = get_object_or_404(Dato, pk=IdUsuario, user=request.user)

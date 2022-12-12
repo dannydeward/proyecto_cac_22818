@@ -7,13 +7,38 @@
 <h1>Datos Inquilinos</h1>
 
 <ul>
+
+  <table class=" table  table-striped  table-hover  ">
+    <tr>
+<td>Usuario</td>
+<td>Dni</td>
+<td>Apellido</td>
+<td>Nombre</td>
+<td>Calle</td>
+<td>Numero</td>
+<td>Piso</td>
+<td>Departamento</td>
+
+    </tr>
+ 
   {% for dato in datos %}
-  <li>
-    <a href="{% url 'detalle_datos' dato.IdUsuario %}">
-        {{dato.IdUsuario}} {{dato.dni}} {{dato.apellido}} {{dato.nombre}}</p>
+
+    <tr>
+<td> {{dato.IdUsuario}}</td>
+<td> {{dato.dni}}</td>
+<td>{{dato.apellido}}</td>
+<td>{{dato.nombre}} </td>
+<td>{{dato.calle}} </td>
+<td>{{dato.numero}}</td>
+<td>{{dato.piso}} </td>
+<td>{{dato.departamento}}</td>
+    </tr>
+    <!--<a href="{% url 'detalle_datos' dato.IdUsuario %}">
+       </p>-->
     </a>
-  </li>
+  
   {% endfor %}
+</table>
 </ul>
 
 {% endblock %}

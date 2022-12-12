@@ -1,0 +1,22 @@
+{% extends 'base.html' %}
+
+
+
+{% block content %}
+
+<h1>Realizar Pago</h1>
+
+
+<form action="{% url 'pagar_cuota' cuota.IdExpensa %}" method="GET">
+  {% csrf_token %}
+  <button>
+    Cobrar
+  </button>
+
+</form>
+
+{% endblock %}
+
+
+
+

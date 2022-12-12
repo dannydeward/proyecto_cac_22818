@@ -9,6 +9,6 @@ urlpatterns=[
     path('cuotas/', views.cuotas, name='cuotas'),
     path('cuotas/<int:IdExpensa>', views.detalle_cuotas, name='detalle_cuotas'),
     path('cuotas/<int:IdExpensa>/pagar', views.pagar_cuota, name='pagar_cuota'),
-  
    
+     
     ]

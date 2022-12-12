@@ -9,4 +9,5 @@ urlpatterns=[
     path('crear_expensas/', views.crear_expensas, name='crear_expensas'),
     path('cuotas/<int:IdExpensa>/borrar', views.borrar_cuota, name='borrar_cuota'),
     path('logout/', views.signout, name='logout'),
+    path('administradores/', views.administradores, name='administradores'),
     ]

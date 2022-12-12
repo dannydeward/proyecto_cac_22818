@@ -6,21 +6,42 @@
 
 <h1>Cuotas</h1>
 
-<ul>
+                  
   {% for cuota in cuotas %}
-  <li>
-    <a href="{% url 'detalle_cuotas' cuota.IdExpensa %}">
-      {% if cuota.fechapago %}
-        <strong>{{cuota.anio}} {{cuota.mes}} {{cuota.importe}}</strong>
-      {% else %}
-        {{cuota.anio}} {{cuota.mes}} {{cuota.importe}}
-      {% endif %}
-      <p>{{cuota.pagado}}</p>
+ 
+    <!--<a href="{% url 'detalle_cuotas' cuota.IdExpensa %}">-->
+      <table class=" table  table-striped  table-hover  "> 
+        <tr>
+          <td>Año</td>
+          <td>mes</td>
+          <td>importe</td>
+          <td>pagado</td>
+          <td> Fecha de pago</td>
+        </tr>
+        {% if cuota.fechapago %}
+      <tr>
+          <td>{{cuota.anio}}</td> 
+           <td>{{cuota.mes}} </td> 
+          <td>{{cuota.importe}}</td>
+          <td>{{couta.pagado}}</td>
+          <td>{{cuota.fechapago|date:'M j Y:i'}}</td>
 
-      {{cuota.fechapago|date:'M j Y:i'}}
-    </a>
-  </li>
+      {% else %}
+
+      <td>{{cuota.anio}}</td>
+       <td>{{cuota.mes}}</td>  
+       <td>{{cuota.importe}}</td>
+      
+     
+    <button>
+      Cobrar
+    </button>
+  </form>
+  {% endif %}
+  </tr>
+  </table>
+
   {% endfor %}
-</ul>
+
 
 {% endblock %}

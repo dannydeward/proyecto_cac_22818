@@ -24,7 +24,7 @@ class DatosForm(ModelForm):
 class ExpensasForm(ModelForm):
     class Meta:
         model = Expensa
-        fields = ['anio', 'mes', 'importe', 'fecha']
+        fields = ['dni', 'anio', 'mes', 'importe', 'fecha']
 
 class DatosForm1(forms.Form):
     dni = forms.CharField(
@@ -94,7 +94,12 @@ class DatosForm1(forms.Form):
         )
 
 class ExpensasForm1(ModelForm):
-    #IdExpensa = models.AutoField(primary_key=True)
+    dni = forms.CharField(
+        label='DNI',
+        max_length=10,
+        validators=(solo_numeros,),
+        widget=forms.TextInput(attrs={'class':'form-control','placeholder':'Ingrese DNI'})
+        )
     anio = forms.CharField(
         label='Año',
         max_length=4,

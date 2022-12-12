@@ -17,59 +17,41 @@
     <div class="collapse navbar-collapse" id="navbarNav">
       <ul class="navbar-nav ms-auto">
         <li class="nav-item">
-          {% if user.is_authenticated %}
+        <!--  {% if user.is_authenticated %}
           <a href="/usuarios" class="nav-link">home</a>
           {% else %}
           <a href="/home" class="nav-link">Home</a>
-          {% endif %}
+          {% endif %}-->
         </li>
-
-     {% if user.is_authenticated %}
-   
+        {% if user.is_authenticated %}
         <li class="nav-item">
           <a href="{% url 'datos' %}" class="nav-link">Datos</a>
         </li>
-
-        {% if perms.servinquilino.add_dato %}
-      <li class="nav-item">
-                  <a href="{% url 'crear_datos' %}" class="nav-link">Crear Datos</a>
-      </li>
-      {% endif %}
-
+       <!-- <li class="nav-item">
+          <a href="{% url 'crear_datos' %}" class="nav-link">Crear Datos</a>
+        </li>-->
         <li class="nav-item">
           <a href="{% url 'cuotas' %}" class="nav-link">Cuotas</a>
         </li>
-
-                <li class="nav-item">
+        <li class="nav-item">
           <a href="{% url 'pagar_cuota' %}" class="nav-link">Pagar Cuota</a>
         </li>
-
-        {% if perms.servinquilino.add_dato %}
         <li class="nav-item">
-        <a href="{% url 'crear_expensas' %}" class="nav-link">Crear Cuota Expensa</a>
-        </li>
-       {% endif %}
+        <!--  <a href="{% url 'crear_expensas' %}" class="nav-link">Crear Cuota Expensa</a>
+        </li>-->
 
-
-        {% if perms.servinquilino.add_user %}
-       <li class="nav-item">
-       
+        <!--<li class="nav-item">
           <a href="/signup" class="nav-link">Registrar</a>
-        </li> 
-        {% endif%}
-
-
+        </li>-->
         <li class="nav-item">
           <a class="nav-link" href="/logout">Salir</a>
         </li>
         {% else %}
-   
-      {% endif %} 
 
         <li class="nav-item">
           <a href="/signin" class="nav-link">Ingresar</a>
         </li>
-      
+        {% endif %}
       
         <li class="nav-item">
           <a href="/nosotros" class="nav-link">Nosotros</a>
