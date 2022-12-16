@@ -4,6 +4,7 @@ from wsgiref.validate import validator
 from django.forms import ValidationError
 from django import forms
 from servinquilino.models import Dato, Expensa
+from django.contrib.auth.models import User
 
 def solo_caracteres(valor):
     if any(char.isdigit() for char in valor):
@@ -18,13 +19,20 @@ def solo_numeros(valor):
 class DatosForm(ModelForm):
     class Meta:
         model = Dato
-        fields = ['dni', 'nombre', 'apellido', 'calle', 'numero', 'piso', 'dpto', 'observacion']
+        fields = ['user','dni', 'nombre', 'apellido', 'calle', 'numero', 'piso', 'dpto', 'observacion']
         #'localidad', 'provincia', 'email',
-
+        user = forms.ModelChoiceField(
+            queryset= User.objects.filter(is_superuser=0),
+            widget=forms.Select(attrs={'class': 'form-control'})
+        )
 class ExpensasForm(ModelForm):
     class Meta:
         model = Expensa
-        fields = ['dni', 'anio', 'mes', 'importe', 'fecha']
+        fields = ['user', 'dni', 'anio', 'mes', 'importe', 'fecha']
+        user = forms.ModelChoiceField(
+            queryset= User.objects.filter(is_superuser=0),
+            widget=forms.Select(attrs={'class': 'form-control'})
+        )
 
 class DatosForm1(forms.Form):
     dni = forms.CharField(

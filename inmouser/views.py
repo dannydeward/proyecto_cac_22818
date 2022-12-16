@@ -15,7 +15,6 @@ from servinquilino.forms import DatosForm, ExpensasForm
 # Create your views here.
 def administradores(request):
     return render(request, 'inmonuser/administradores.html')
-
     
 
 def signup(request):
@@ -30,8 +29,7 @@ def signup(request):
                 user.save()
                 login(request, user)
                 return redirect('Home')
-            
-                
+                            
             except IntegrityError:
                 return render(request, 'servinquilino/home.html', {"form": UserCreationForm, "error": "Usuario ya existe."})
                          
@@ -69,11 +67,14 @@ def crear_expensas(request):
         try:
             form = ExpensasForm(request.POST)
             new_expensa = form.save(commit=False)
-            new_expensa.user = request.user
+            #new_expensa.user = User.id
             new_expensa.save()
             return redirect('cuotas')
         except ValueError:
             return render(request, 'inmonuser/crear_expensas.html', {"form": ExpensasForm, "error": "Error creando Cuota."})
+
+
+
 @login_required
 def borrar_dato(request, IdUsuario):
     dato = get_object_or_404(Dato, pk=IdUsuario, user=request.user)

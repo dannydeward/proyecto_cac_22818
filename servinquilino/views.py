@@ -1,7 +1,7 @@
 from django.shortcuts import render, redirect, get_object_or_404
 from django.contrib.auth.forms import UserCreationForm, AuthenticationForm
-from django.contrib.auth import login, logout, authenticate , get_permission_codename
-from django.contrib.auth.models import User
+from django.contrib.auth import login, logout, authenticate ,get_permission_codename
+from django.contrib.auth.models import User, Permission,PermissionManager
 from django.db import IntegrityError
 from django.utils import timezone
 from django.contrib.auth import login
@@ -21,11 +21,10 @@ def signin(request):
             return render(request, 'servinquilino/signin.html',
                           {"form": AuthenticationForm, "error": "Usuario o Contraseña no válido."})
         if login(request, user):
-                if user == get_permission_codename ("servinquilino.add_user"):
+                if user ==PermissionManager ( "servinquilino.add_dato"):
                  return  redirect('administradores')
-        else:      
-    
-            return redirect('usuarios')
+        else:
+             return redirect('usuarios')
 
 
 
