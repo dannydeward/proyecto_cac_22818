@@ -3,8 +3,10 @@ Abro la carpeta proyecto_cac_22818 en Visual Studio Code
 
 Abro una terminal.
 
-Verifico si está Python instalado y que versión es:
+Verifico si está Python instalado y que versión es: 3.12.64
 python --version
+
+tambien  django version 3.2.14
 
 Para aislar el proyecto creo un entorno virtual que contenga una propia version de Python
 
